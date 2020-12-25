@@ -75,6 +75,30 @@ def check_col(input_puzzle_vector):
             return False
 
 
+def create_col_from_grids(vector_as_puzzle):
+    temp_vector = list()
+
+    for i in range(0, 4, 2):
+        for j in range(0, 4, 2):
+            # create the sub grid rows
+            sub_grid_row_top = vector_as_puzzle[i]
+            sub_grid_row_bottom = vector_as_puzzle[j]
+
+            # create the sub grid columns
+            temp_vector.append(sub_grid_row_top[i + 1])
+            temp_vector.append(sub_grid_row_bottom[j + 1])
+            temp_vector.append(sub_grid_row_bottom[i + 1])
+            temp_vector.append(sub_grid_row_bottom[j + 1])
+
+            # create the columns
+            vector_as_puzzle.append(temp_vector[0])
+            vector_as_puzzle.append(temp_vector[1])
+            vector_as_puzzle.append(temp_vector[2])
+            vector_as_puzzle.append(temp_vector[3])
+
+    return vector_as_puzzle
+
+
 # test
 output = [2, 4, 1, 3]
 puzzle = make_vector(output)
@@ -84,4 +108,6 @@ permuted_row = permute_rows(puzzle, 2, 3, 1)
 check = check_column(puzzle, 4)
 check_columns = check_col(puzzle)
 
+cols_from_grids = create_col_from_grids(puzzle)
+print(cols_from_grids)
 
