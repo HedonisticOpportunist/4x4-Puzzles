@@ -99,7 +99,20 @@ def create_col_from_grids(vector_as_puzzle):
     return vector_as_puzzle
 
 
+def make_solution(vector_row):
+    puzzle_input = make_vector(vector_row)
+    for x in range(3):
+        for y in range(3):
+            for z in range(3):
+                permuted_puzzle = permute_rows(puzzle_input, x, y, z)
+                columns = create_col_from_grids(permuted_puzzle)
+                if check_col(columns):
+                    return True
+    return False
+
+
 # test
+
 output = [2, 4, 1, 3]
 puzzle = make_vector(output)
 permuted = permute_vector(output, 1)
@@ -109,5 +122,6 @@ check = check_column(puzzle, 4)
 check_columns = check_col(puzzle)
 
 cols_from_grids = create_col_from_grids(puzzle)
-print(cols_from_grids)
+solution = make_solution(permuted_row)
 
+print(solution)
