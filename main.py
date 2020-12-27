@@ -106,9 +106,9 @@ def make_solution(vector_row):
 def make_blanks(vector_to_make_blank, n):
     for item in range(n):
         # generate a number between 0 and 3
-        random_number = random.randint(0, 3)
-        # replace the number with a 0
-        vector_to_make_blank[random_number] = 0
+        random_number_row = random.randint(0, 3)
+        random_number_col = random.randint(0, 3)
+        vector_to_make_blank[random_number_row][random_number_col] = 0
     return vector_to_make_blank
 
 
@@ -116,4 +116,5 @@ def make_blanks(vector_to_make_blank, n):
 
 output = [2, 4, 1, 3]
 solution = make_solution(output)
-blank_vector = make_blanks(solution, 2)
+blank_vector = make_blanks(solution, 3)
+print(blank_vector)
