@@ -104,17 +104,19 @@ def make_solution(vector_row):
 
 
 def make_blanks(vector_to_make_blank, n):
+    if n > len(vector_to_make_blank) or n < 0:
+        return "Please enter a valid number, which is either smaller than " \
+               "the length of the vector or bigger than zero."
     for item in range(n):
         # generate a number between 0 and 3
         random_number_row = random.randint(0, 3)
         random_number_col = random.randint(0, 3)
-        vector_to_make_blank[random_number_row][random_number_col] = 0
+        vector_to_make_blank[random_number_row][random_number_col] = None
     return vector_to_make_blank
 
 
 # test
 
-output = [2, 4, 1, 3]
+output = [1, 2, 3, 4]
 solution = make_solution(output)
-blank_vector = make_blanks(solution, 3)
-print(blank_vector)
+blank_vector = make_blanks(solution, 4)
