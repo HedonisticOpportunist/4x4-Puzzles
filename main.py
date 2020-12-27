@@ -1,4 +1,7 @@
+import math
+import random
 from queue import Queue
+from numpy import zeros
 
 
 # function to create a new
@@ -76,52 +79,41 @@ def check_col(input_puzzle_vector):
 
 
 def create_col_from_grids(vector_as_puzzle):
-    temp_vector = list()
+    # create a temporary two dimensional vector
+    temp = zeros([4, 4], int)
+    for i in range(4):
+        row = math.floor(i / 2)
+        temp[i] = vector_as_puzzle[i][row]
+        for j in range(4):
+            col = j % 2
+            temp[j] = vector_as_puzzle[j][col]
 
-    for i in range(0, 4, 2):
-        for j in range(0, 4, 2):
-            # create the sub grid rows
-            sub_grid_row_top = vector_as_puzzle[i]
-            sub_grid_row_bottom = vector_as_puzzle[j]
-
-            # create the sub grid columns
-            temp_vector.append(sub_grid_row_top[i + 1])
-            temp_vector.append(sub_grid_row_bottom[j + 1])
-            temp_vector.append(sub_grid_row_bottom[i + 1])
-            temp_vector.append(sub_grid_row_bottom[j + 1])
-
-            # create the columns
-            vector_as_puzzle.append(temp_vector[0])
-            vector_as_puzzle.append(temp_vector[1])
-            vector_as_puzzle.append(temp_vector[2])
-            vector_as_puzzle.append(temp_vector[3])
-
-    return vector_as_puzzle
+    return temp
 
 
 def make_solution(vector_row):
     puzzle_input = make_vector(vector_row)
-    for x in range(3):
-        for y in range(3):
-            for z in range(3):
-                permuted_puzzle = permute_rows(puzzle_input, x, y, z)
-                columns = create_col_from_grids(permuted_puzzle)
-                if check_col(columns):
-                    return True
+    for x in range(1, 4):
+        for y in range(1, 4):
+            for z in range(1, 4):
+                puzzle_input = permute_rows(puzzle_input, x, y, z)
+                columns = create_col_from_grids(puzzle_input)
+                if check_col(columns) and y == 3:
+                    return puzzle_input
     return False
+
+
+def make_blanks(vector_to_make_blank, n):
+    for item in range(n):
+        # generate a number between 0 and 3
+        random_number = random.randint(0, 3)
+        # replace the number with a 0
+        vector_to_make_blank[random_number] = 0
+    return vector_to_make_blank
 
 
 # test
 
 output = [2, 4, 1, 3]
-puzzle = make_vector(output)
-permuted = permute_vector(output, 1)
-
-permuted_row = permute_rows(puzzle, 2, 3, 1)
-check = check_column(puzzle, 4)
-check_columns = check_col(puzzle)
-
-cols_from_grids = create_col_from_grids(puzzle)
-solution = make_solution(permuted_row)
-
-print(solution)
+solution = make_solution(output)
+blank_vector = make_blanks(solution, 2)
