@@ -138,7 +138,7 @@ def print_array(vector):
 # test
 output = [2, 3, 4, 1]
 solution = make_solution(output)
-print_array(solution)
+#print_array(solution)
 
 blank_vector = make_blanks(solution, 1)
 print_array(blank_vector)
