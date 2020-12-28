@@ -153,19 +153,20 @@ def print_array(vector):
 
 
 # switch rows
-def switch_rows(row, i, j):
-    temp_row = row[i]
-    row[i] = row[j]
-    row[j] = temp_row
-    return row
+def switch_rows(puzzle_arr_row, i, j):
+    temp_row = puzzle_arr_row[i]
+    puzzle_arr_row[i] = puzzle_arr_row[j]
+    puzzle_arr_row[j] = temp_row
+    return puzzle_arr_row
 
 
 def make_solution_with_changing_rows(vector_row):
+    # swap rows
+    for i in range(10):
+        vector_row = switch_rows(vector_row, random.randint(0, 3), random.randint(0, 3))
+
     # make the vector
     puzzle_input = make_vector(vector_row)
-
-    # swap rows
-    puzzle_input = switch_rows(puzzle_input, random.randint(0, 4), random.randint(0, 4))
     # cyclic permutations
     cyclic_permutation_x = [2, 1]
     cyclic_permutation_y = [1, 2]
