@@ -37,6 +37,7 @@ def permute_vector(row, p):
 
 
 def permute_rows(vector_input, x, y, z):
+    # permute all the rows in the vector, save for the first
     vector_input[1] = permute_vector(vector_input[1], x)
     vector_input[2] = permute_vector(vector_input[2], y)
     vector_input[3] = permute_vector(vector_input[3], z)
@@ -52,13 +53,14 @@ def linear_search(list_to_search, item):
 
 
 def check_column(vector_puzzle, j):
+    # if the number is invalid, throw an error message
     if j < 0 or j >= 4:
         return 'Invalid number. Choose a number 1 and 3'
     else:
         temp = list()
         found = 0
-        for element in range(len(vector_puzzle)):
-            temp.append(vector_puzzle[j])
+        for i in range(4):
+            temp.append(vector_puzzle[i][j])
 
         for item in range(4):
             if linear_search(temp, j):
@@ -79,28 +81,37 @@ def check_col(input_puzzle_vector):
 
 
 def create_col_from_grids(vector_as_puzzle):
-    # create a temporary two dimensional vector
-    temp = zeros([4, 4], int)
-    for i in range(4):
-        row = math.floor(i / 2)
-        temp[i] = vector_as_puzzle[i][row]
-        for j in range(4):
-            col = j % 2
-            temp[j] = vector_as_puzzle[j][col]
+    if (len(vector_as_puzzle)) >= 0 or vector_as_puzzle is not None:
+        # create a temporary two dimensional vector of type int and length 4
+        temp = zeros([4, 4], int)
+        for i in range(4):
+            row = math.floor(i / 2)
+            temp[i] = vector_as_puzzle[i][row]
+            for j in range(4):
+                col = j % 2
+                temp[j] = vector_as_puzzle[j][col]
 
-    return temp
+        return temp
+    return 'Please enter a valid vector'
 
 
 def make_solution(vector_row):
+    # make the vector
     puzzle_input = make_vector(vector_row)
-    for x in range(1, 4):
-        for y in range(1, 4):
-            for z in range(1, 4):
-                puzzle_input = permute_rows(puzzle_input, x, y, z)
-                columns = create_col_from_grids(puzzle_input)
-                if check_col(columns) and y == 3:
-                    return puzzle_input
-    return False
+    # cyclic permutations
+    cyclic_permutation_x = [2, 1]
+    cyclic_permutation_y = [1, 2]
+    cyclic_permutation_z = [3, 3]
+    for i in range(len(cyclic_permutation_x)):
+        puzzle_input = permute_rows(puzzle_input,
+                                    cyclic_permutation_x[i],
+                                    cyclic_permutation_y[i],
+                                    cyclic_permutation_z[i]
+                                    )
+        columns = create_col_from_grids(puzzle_input)
+        if check_col(columns):
+            return puzzle_input
+        return False
 
 
 def make_blanks(vector_to_make_blank, n):
@@ -111,12 +122,23 @@ def make_blanks(vector_to_make_blank, n):
         # generate a number between 0 and 3
         random_number_row = random.randint(0, 3)
         random_number_col = random.randint(0, 3)
+
+        # replace the selected row and column with None
         vector_to_make_blank[random_number_row][random_number_col] = None
     return vector_to_make_blank
 
 
-# test
+def print_array(vector):
+    for i in range(len(vector)):
+        for j in range(len(vector[i])):
+            print(vector[i][j], end=' ')
+        print()
 
-output = [1, 2, 3, 4]
+
+# test
+output = [2, 3, 4, 1]
 solution = make_solution(output)
-blank_vector = make_blanks(solution, 4)
+print_array(solution)
+
+blank_vector = make_blanks(solution, 1)
+print_array(blank_vector)
