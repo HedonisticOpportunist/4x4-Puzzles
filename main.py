@@ -1,3 +1,4 @@
+import math
 import random
 from queue import Queue
 from numpy import zeros
@@ -103,6 +104,35 @@ def create_col_from_grids(vector_as_puzzle):
         temp[3] = rows_lower[1]
         return temp
     return 'Please enter a valid vector'
+
+
+def col_from_grid(vector_as_puzzle):
+    # declare the list
+    temp = zeros([4, 4], int)
+
+    # declare sub grid lists that are to be called later
+    sub_grids_rows = list()
+    sub_grids_columns = list()
+
+    # create the sub grid values
+    for j in range(len(vector_as_puzzle)):
+        rows = math.floor(j / 2)
+        columns = j % 2
+        sub_grids_rows.append(rows)
+        sub_grids_columns.append(columns)
+
+    # add the rows to the temp vector
+    for i in range(len(vector_as_puzzle)):
+        temp[i] = vector_as_puzzle[sub_grids_rows[i]]
+
+    # add the columns to the temp temp vector
+    for j in range(4):
+        column = []
+        for i in range(4):
+            column.append(vector_as_puzzle[sub_grids_columns[i]])
+        temp[j] = column[j]
+
+    return temp
 
 
 def make_solution(vector_row):
