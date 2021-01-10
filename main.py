@@ -97,7 +97,7 @@ def create_col_from_grids(vector_as_puzzle):
         temp = zeros([4, 4], int)
 
         # declare the rows and columns of the temp vector
-        temp[0] = rows_upper[0]
+        temp[0]= rows_upper[0]
         temp[1] = rows_upper[1]
         temp[2] = rows_lower[0]
         temp[3] = rows_lower[1]
@@ -191,7 +191,7 @@ def switch_rows(puzzle_arr_row, i, j):
 
 def make_solution_with_changing_rows(vector_row):
     # swap rows
-    for i in range(10):
+    for i in range(100):
         vector_row = switch_rows(vector_row, random.randint(0, 3), random.randint(0, 3))
 
     # make the vector
