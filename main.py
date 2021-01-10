@@ -88,16 +88,15 @@ def check_col(input_puzzle_vector):
 
 
 def create_col_from_grids(vector_as_puzzle):
-    if (len(vector_as_puzzle)) >= 0 or vector_as_puzzle is not None:
-        # create a temporary two dimensional vector of type int and length 4
+    if (len(vector_as_puzzle)) > 0 or vector_as_puzzle is not None:
         # declare the rows
         rows_upper = vector_as_puzzle[0]
         rows_lower = vector_as_puzzle[1]
 
-        # declare the list
+        # create a temporary two dimensional vector of type int and length 4
         temp = zeros([4, 4], int)
 
-        # declare the columns
+        # declare the rows and columns of the temp vector
         temp[0] = rows_upper[0]
         temp[1] = rows_upper[1]
         temp[2] = rows_lower[0]
@@ -272,6 +271,24 @@ print()
 last_output = [1, 2, 3, 4]
 solution = make_solution_with_changing_rows(last_output)
 blank_vector = make_blanks(solution, 1)
+print_array(blank_vector)
+
+print()
+print('******** AND DONE **********')
+print()
+
+final_valid_output = [2, 4, 1, 3]
+solution = make_solution(final_valid_output)
+blank_vector = make_blanks(solution, 1)
+print_array(blank_vector)
+
+print()
+print('**********')
+print()
+
+last_output_switch = [2, 4, 1, 3]
+solution = make_solution_with_changing_rows(last_output_switch)
+blank_vector = make_blanks(solution, 2)
 print_array(blank_vector)
 
 print()
